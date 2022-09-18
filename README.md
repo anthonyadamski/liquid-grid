@@ -1,6 +1,6 @@
 # Liquid Grid SASS Plugin
 
-Liquid Grid is a minimalist and scalable SCSS mixin that generates a responsive grid and is less than <2kb out of the box.
+Liquid Grid is a minimalist and scalable SCSS mixin that generates a responsive grid in less than <2kb out of the box.
 
 Add liquid settings into your desired file. I recommend using a _variables.scss file for this.
 
