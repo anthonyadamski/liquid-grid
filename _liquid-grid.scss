@@ -1,0 +1,68 @@
+///////////////////////////////////////////////////////////////////////
+//
+// Name: Liquid Gird
+// Version: 1.7
+// Author: Anthony Adamski
+//
+// Description:
+// A minimalist and scalable SCSS mixin that generates a
+// responsive grid and is less than <2kb out of the box.
+//
+// Set up:
+// Include the SCSS mixin:
+// @include liquid-grid;
+//
+// You may override the mixin default parameters
+// @include liquid-grid($columns: 6, $grid-gap: 56px);
+//
+// Outputs the following:
+// .grid, .grid--no-responsive, .grid--no-gutters
+// .col, .col-sm-1, .col-sm-2, etc.
+//
+//
+//////////////////////////////////////////////////////////////////////
+
+@mixin liquid-grid(
+  $columns: 12,
+  $grid-gap: 24px,
+  $full-width-breakpoint: 600px,
+  $grid-class: "grid",
+  $column-class: "col"
+) {
+  .#{$grid-class} {
+    --grid-gap: #{$grid-gap};
+    display: flex;
+    flex-wrap: wrap;
+
+    // Generate gutters if no modifier class is added "*--no-gutters"
+    &:not(.#{$grid-class}--no-gutters) {
+      grid-gap: var(--grid-gap);
+    }
+
+    .#{$column-class} {
+      // Set default column sizing if no column number is specified
+      position: relative;
+      flex: 1 0 0%;
+
+      // Generate column classes
+      @for $i from 1 through $columns {
+        $column-width: calc(((100% / #{$columns}) * #{$i}));
+        &-#{$i} {
+          position: relative;
+          flex: 1;
+          max-width: $column-width;
+          width: 100%;
+        }
+      }
+    }
+
+    // Set full width columns at breakpoint if no modifier class is added "*--no-responsive"
+    &:not(.#{$grid-class}--no-responsive) > * {
+      @media screen and (max-width: $full-width-breakpoint) {
+        max-width: none;
+        width: 100% !important;
+        flex: 1 1 100%;
+      }
+    }
+  }
+}
